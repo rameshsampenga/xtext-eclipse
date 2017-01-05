@@ -13,8 +13,8 @@ import org.eclipse.core.resources.IProject
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.xtext.junit4.InjectWith
-import org.eclipse.xtext.junit4.XtextRunner
-import org.eclipse.xtext.junit4.logging.LoggingTester
+import org.eclipse.xtext.testing.XtextRunner
+import org.eclipse.xtext.testing.logging.LoggingTester
 import org.eclipse.xtext.junit4.ui.AbstractEditorTest
 import org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil
 import org.eclipse.xtext.junit4.ui.util.TargetPlatformUtil
