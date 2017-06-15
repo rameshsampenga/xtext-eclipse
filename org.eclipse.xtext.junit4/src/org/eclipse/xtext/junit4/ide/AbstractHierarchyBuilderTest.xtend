@@ -14,7 +14,6 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.ide.editor.hierarchy.AbstractHierarchyBuilder
-import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.eclipse.xtext.resource.EObjectAtOffsetHelper
 import org.eclipse.xtext.resource.IResourceDescriptionsProvider
 import org.eclipse.xtext.resource.XtextResource
@@ -33,10 +32,11 @@ import org.eclipse.xtext.ide.editor.hierarchy.IHierarchyNodeReference
  * @author kosyakov - Initial contribution and API
  * @since 2.10
  */
+@Deprecated
 abstract class AbstractHierarchyBuilderTest {
 
 	@Inject
-	extension ValidationTestHelper
+	extension org.eclipse.xtext.junit4.validation.ValidationTestHelper
 
 	@Inject
 	extension EObjectAtOffsetHelper

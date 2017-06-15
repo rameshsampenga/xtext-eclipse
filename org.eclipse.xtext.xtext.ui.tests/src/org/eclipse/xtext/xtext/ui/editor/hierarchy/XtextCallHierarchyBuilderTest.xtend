@@ -12,7 +12,6 @@ import com.google.inject.Provider
 import org.eclipse.xtext.ide.editor.hierarchy.DefaultCallHierarchyBuilder.CallHierarchyType
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
-import org.eclipse.xtext.junit4.ide.AbstractHierarchyBuilderTest
 import org.eclipse.xtext.tests.XtextInjectorProvider
 import org.eclipse.xtext.ui.editor.hierarchy.XtextCallHierarchyBuilder
 import org.eclipse.xtext.ui.editor.hierarchy.XtextCallHierarchyNode
@@ -26,7 +25,8 @@ import org.eclipse.xtext.ide.editor.hierarchy.IHierarchyNode
  */
 @RunWith(XtextRunner)
 @InjectWith(XtextInjectorProvider)
-class XtextCallHierarchyBuilderTest extends AbstractHierarchyBuilderTest {
+@Deprecated
+class XtextCallHierarchyBuilderTest extends org.eclipse.xtext.junit4.ide.AbstractHierarchyBuilderTest {
 
 	@Inject
 	Provider<XtextCallHierarchyBuilder> callHierarchyBuilderProvider

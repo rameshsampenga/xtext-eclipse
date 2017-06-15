@@ -42,6 +42,7 @@ import org.junit.Assert;
  * @author kosyakov - Initial contribution and API
  * @since 2.10
  */
+@Deprecated
 @SuppressWarnings("all")
 public abstract class AbstractHierarchyBuilderTest {
   @Accessors

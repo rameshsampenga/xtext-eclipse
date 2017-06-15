@@ -22,7 +22,6 @@ import org.eclipse.xtext.build.IndexState
 import org.eclipse.xtext.generator.OutputConfiguration
 import org.eclipse.xtext.generator.OutputConfigurationAdapter
 import org.eclipse.xtext.generator.OutputConfigurationProvider
-import org.eclipse.xtext.junit4.util.InMemoryURIHandler
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.resource.impl.ChunkedResourceDescriptions
@@ -39,6 +38,7 @@ import org.junit.Before
  * @noimplement
  */
 @Beta
+@Deprecated
 abstract class AbstractIncrementalBuilderTest {
 	
 	@Inject protected IncrementalBuilder incrementalBuilder
@@ -50,11 +50,11 @@ abstract class AbstractIncrementalBuilderTest {
 	protected Multimap<URI, URI> generated
 	protected List<URI> deleted
 	protected List<Issue> issues
-	protected InMemoryURIHandler inMemoryURIHandler
+	protected org.eclipse.xtext.junit4.util.InMemoryURIHandler inMemoryURIHandler
 
 	@Before def void setUp() {
 		clean()
-		inMemoryURIHandler = new InMemoryURIHandler()
+		inMemoryURIHandler = new org.eclipse.xtext.junit4.util.InMemoryURIHandler()
 	}
 
 	protected def clean() {
@@ -122,7 +122,7 @@ abstract class AbstractIncrementalBuilderTest {
 	}
 
 	protected def uri(String path) {
-		URI.createURI(InMemoryURIHandler.SCHEME+":/"+path)
+		URI.createURI(org.eclipse.xtext.junit4.util.InMemoryURIHandler.SCHEME+":/"+path)
 	}
 
 	protected def URI -(String path, String content) {

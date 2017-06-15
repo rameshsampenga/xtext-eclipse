@@ -3,23 +3,18 @@ package org.eclipse.xtext.xbase.junit.formatter
 import com.google.inject.Inject
 import java.util.Collection
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.preferences.MapBasedPreferenceValues
 import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.xtext.xbase.formatting.AbstractFormatter
-import org.eclipse.xtext.xbase.formatting.IBasicFormatter
-import org.eclipse.xtext.xbase.formatting.TextReplacement
 import org.junit.Assert
-import org.eclipse.xtext.xbase.formatting.FormattingPreferenceValues
-import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @deprecated use org.eclipse.xtext.junit4.formatter.FormatterTester
  */
 @Deprecated
 class FormatterTester {
-	@Inject extension ParseHelper<EObject>
-	@Inject IBasicFormatter formatter
+	@Inject extension org.eclipse.xtext.junit4.util.ParseHelper<EObject>
+	@Inject org.eclipse.xtext.xbase.formatting.IBasicFormatter formatter
 
 	@SuppressWarnings("unchecked")
 	def assertFormatted((AssertingFormatterData)=>void init) {
@@ -36,14 +31,14 @@ class FormatterTester {
 			Assert.assertEquals(parsed.eResource.errors.join("\n"), 0, parsed.eResource.errors.size)
 		val oldDocument = (parsed.eResource as XtextResource).parseResult?.rootNode?.text
 
-		switch formatter { AbstractFormatter: formatter.allowIdentityEdits = true }
+		switch formatter { org.eclipse.xtext.xbase.formatting.AbstractFormatter: formatter.allowIdentityEdits = true }
 
 		// Step 1: Ensure formatted document equals expectation
 		val start = prefix.length
 		val length = toBeFormatted.length
-		val edits = <TextReplacement>newLinkedHashSet
+		val edits = <org.eclipse.xtext.xbase.formatting.TextReplacement>newLinkedHashSet
 		edits += formatter.format(parsed.eResource as XtextResource, start, length, cfg)
-		switch formatter { AbstractFormatter: if(formatter.conflictOccurred) throw new RuntimeException("There are conflicting text edits, see console for details.") }
+		switch formatter { org.eclipse.xtext.xbase.formatting.AbstractFormatter: if(formatter.conflictOccurred) throw new RuntimeException("There are conflicting text edits, see console for details.") }
 		if (!allowErrors)
 			edits += createMissingEditReplacements(parsed.eResource as XtextResource, edits, start, length)
 		val newDocument = oldDocument.applyEdits(edits)
@@ -72,7 +67,7 @@ class FormatterTester {
 		}
 	}
 
-	def protected String applyEdits(String oldDocument, Collection<TextReplacement> edits) {
+	def protected String applyEdits(String oldDocument, Collection<org.eclipse.xtext.xbase.formatting.TextReplacement> edits) {
 		var lastOffset = 0
 		val newDocument = new StringBuilder()
 		for (edit : edits.sortBy[offset]) {
@@ -84,7 +79,7 @@ class FormatterTester {
 		newDocument.toString
 	}
 
-	def protected String applyDebugEdits(String oldDocument, Collection<TextReplacement> edits) {
+	def protected String applyDebugEdits(String oldDocument, Collection<org.eclipse.xtext.xbase.formatting.TextReplacement> edits) {
 		var lastOffset = 0
 		val debugTrace = new StringBuilder()
 		for (edit : edits.sortBy[offset]) {
@@ -96,16 +91,16 @@ class FormatterTester {
 		debugTrace.toString
 	}
 
-	def protected createMissingEditReplacements(XtextResource res, Collection<TextReplacement> edits, int offset,
+	def protected createMissingEditReplacements(XtextResource res, Collection<org.eclipse.xtext.xbase.formatting.TextReplacement> edits, int offset,
 		int length) {
 		val offsets = edits.map[it.offset].toSet
-		val result = <TextReplacement>newArrayList
+		val result = <org.eclipse.xtext.xbase.formatting.TextReplacement>newArrayList
 		var lastOffset = 0
 		for (leaf : res.parseResult?.rootNode?.leafNodes?:emptyList)
 			if (!leaf.hidden || !leaf.text.trim.nullOrEmpty) {
 				val leafRegion = leaf.textRegion
 				if ((lastOffset >= offset) && (leafRegion.offset <= offset + length) && !offsets.contains(lastOffset))
-					result += new TextReplacement(lastOffset, leafRegion.offset - lastOffset, "!!")
+					result += new org.eclipse.xtext.xbase.formatting.TextReplacement(lastOffset, leafRegion.offset - lastOffset, "!!")
 				lastOffset = leafRegion.offset + leafRegion.length
 			}
 		result
@@ -113,10 +108,11 @@ class FormatterTester {
 }
 
 @Accessors
+@Deprecated
 class AssertingFormatterData {
 	MapBasedPreferenceValues config
 	def getCfg() {
-		return new FormattingPreferenceValues(config);
+		return new org.eclipse.xtext.xbase.formatting.FormattingPreferenceValues(config);
 	}
 	CharSequence expectation
 	CharSequence toBeFormatted

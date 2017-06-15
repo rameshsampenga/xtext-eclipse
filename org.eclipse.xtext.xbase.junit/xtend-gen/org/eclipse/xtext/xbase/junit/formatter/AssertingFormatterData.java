@@ -6,6 +6,7 @@ import org.eclipse.xtext.xbase.formatting.FormattingPreferenceValues;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 @Accessors
+@Deprecated
 @SuppressWarnings("all")
 public class AssertingFormatterData {
   private MapBasedPreferenceValues config;

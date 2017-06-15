@@ -30,9 +30,9 @@ public class JavaElementDelegateAdapterFactory implements IAdapterFactory {
 	@Inject
 	private Provider<JavaElementDelegateMainLaunch> mainDelegateProvider;
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("all")
 	@Override
-	public Object getAdapter(Object adaptableObject, @SuppressWarnings("rawtypes")  Class adapterType) {
+	public Object getAdapter(Object adaptableObject, Class adapterType) {
 		if (adaptableObject instanceof JavaElementDelegate) {
 			return ((JavaElementDelegate) adaptableObject).getAdapter(adapterType);
 		}
@@ -62,7 +62,7 @@ public class JavaElementDelegateAdapterFactory implements IAdapterFactory {
 	}
 
 	@Override
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "all" })
 	public Class[] getAdapterList() {
 		return new Class[] { JavaElementDelegate.class };
 	}

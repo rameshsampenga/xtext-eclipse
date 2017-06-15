@@ -58,6 +58,7 @@ import org.junit.Before;
  * @noimplement
  */
 @Beta
+@Deprecated
 @SuppressWarnings("all")
 public abstract class AbstractIncrementalBuilderTest {
   @Inject

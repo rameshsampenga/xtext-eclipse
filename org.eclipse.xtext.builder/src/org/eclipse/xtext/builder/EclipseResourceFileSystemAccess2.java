@@ -26,7 +26,6 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IStorage;
-import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -91,9 +90,6 @@ public class EclipseResourceFileSystemAccess2 extends AbstractFileSystemAccess2 
 	@Inject
 	private TraceForStorageProvider fileBasedTraceInformation;
 
-	@Inject
-	private IWorkspace workspace;
-	
 	@Inject
 	private ProjectByResourceProvider projectProvider;
 	

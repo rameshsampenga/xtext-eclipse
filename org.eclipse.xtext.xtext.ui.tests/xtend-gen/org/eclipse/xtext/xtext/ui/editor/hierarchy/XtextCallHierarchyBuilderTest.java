@@ -34,6 +34,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(XtextRunner.class)
 @InjectWith(XtextInjectorProvider.class)
+@Deprecated
 @SuppressWarnings("all")
 public class XtextCallHierarchyBuilderTest extends AbstractHierarchyBuilderTest {
   @Inject

@@ -12,7 +12,6 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.common.types.JvmIdentifiableElement
-import org.eclipse.xtext.junit4.util.ParseHelper
 import org.eclipse.xtext.xbase.XAbstractFeatureCall
 import org.eclipse.xtext.xbase.XClosure
 import org.eclipse.xtext.xbase.XExpression
@@ -42,7 +41,7 @@ class Oven extends Assert {
 	
 	@Inject extension ReflectExtensions
 	
-	@Inject extension ParseHelper<EObject>
+	@Inject extension org.eclipse.xtext.junit4.util.ParseHelper<EObject>
 	
 	def void fireproof(CharSequence input) throws Exception {
 		input.toString.fireproof

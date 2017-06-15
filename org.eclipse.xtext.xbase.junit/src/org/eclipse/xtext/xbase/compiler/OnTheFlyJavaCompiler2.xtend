@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import java.util.Map
 import org.eclipse.xtext.util.JavaVersion
-import org.eclipse.xtext.xbase.compiler.InMemoryJavaCompiler.Result
 
 /** 
  * @author Sven Efftinge - Initial contribution and API
@@ -32,7 +31,7 @@ class OnTheFlyJavaCompiler2 {
 	}
 	
 	def Class<?> compileToClass(String classname, String code) {
-		val Result result = inMemoryCompiler.compile(
+		val org.eclipse.xtext.xbase.compiler.InMemoryJavaCompiler.Result result = inMemoryCompiler.compile(
 			new JavaSource(classname.toJavaFile,
 				code))
 		try {
@@ -64,7 +63,7 @@ class OnTheFlyJavaCompiler2 {
 	}
 
 	def Map<String, Class<?>> compileToClasses(Map<String, String> sources) {
-		val Result result = inMemoryCompiler.compile(sources.entrySet.map[new JavaSource(key.toJavaFile, value)])
+		val org.eclipse.xtext.xbase.compiler.InMemoryJavaCompiler.Result result = inMemoryCompiler.compile(sources.entrySet.map[new JavaSource(key.toJavaFile, value)])
 		try {
 			if (result.compilationProblems.exists[error]) {
 				throw new IllegalArgumentException('''

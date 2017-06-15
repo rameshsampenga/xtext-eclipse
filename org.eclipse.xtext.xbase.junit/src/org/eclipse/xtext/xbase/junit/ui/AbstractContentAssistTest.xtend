@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.xtext.common.types.access.jdt.IJavaProjectProvider
 import org.eclipse.xtext.common.types.access.jdt.JdtTypeProviderFactory
-import org.eclipse.xtext.junit4.ui.ContentAssistProcessorTestBuilder
 import org.eclipse.xtext.junit4.util.ResourceLoadHelper
 import org.eclipse.xtext.resource.FileExtensionProvider
 import org.eclipse.xtext.resource.XtextResource
@@ -60,8 +59,8 @@ class AbstractContentAssistTest implements ResourceLoadHelper, IJavaProjectProvi
 		return expectation
 	}
 	
-	def protected ContentAssistProcessorTestBuilder newBuilder() throws Exception {
-		new ContentAssistProcessorTestBuilder(injector, this)
+	def protected newBuilder() throws Exception {
+		new org.eclipse.xtext.junit4.ui.ContentAssistProcessorTestBuilder(injector, this)
 	}
 	
 	override getResourceFor(InputStream stream) {
