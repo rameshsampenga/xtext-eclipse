@@ -11,8 +11,10 @@ import static com.google.common.collect.Sets.*;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
@@ -26,6 +28,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.EcoreUtil2;
@@ -127,13 +130,22 @@ public class ClusteringBuilderState extends AbstractBuilderState {
         // use this. Once the build is completed, the persistable index is reset to the contents of newState by
         // virtue of the newMap, which is maintained in synch with this.
         ResourceSet resourceSet = buildData.getResourceSet();
-        final CurrentDescriptions newState = new CurrentDescriptions(resourceSet, newData, buildData);
+        Map<EClass, Iterable<IEObjectDescription>> exportedObjectsByTypeCache = new HashMap<>();
+        final CurrentDescriptions newState = new CurrentDescriptions(resourceSet, newData, buildData) {
+        	    @Override
+        	    public Iterable<IEObjectDescription> getExportedObjectsByType(EClass type) {
+            	    	if (!exportedObjectsByTypeCache.containsKey(type)) {
+            	    	    exportedObjectsByTypeCache.put(type, Lists.newArrayList(super.getExportedObjectsByType(type)));
+            	    	}
+            	    	return exportedObjectsByTypeCache.get(type);
+        	    }
+        };
         buildData.getSourceLevelURICache().cacheAsSourceURIs(toBeDeleted);
         installSourceLevelURIs(buildData);
         // Step 3: Create a queue; write new temporary resource descriptions for the added or updated resources so that we can link
         // subsequently; put all the added or updated resources into the queue.
         writeNewResourceDescriptions(buildData, this, newState, progress.newChild(20));
-
+        exportedObjectsByTypeCache.clear();
         if (progress.isCanceled()) {
             throw new OperationCanceledException();
         }
@@ -309,6 +321,7 @@ public class ClusteringBuilderState extends AbstractBuilderState {
                     clearResourceSet(resourceSet);
             }
         } finally {
+        	    exportedObjectsByTypeCache.clear();
             if(loadOperation != null) loadOperation.cancel();
             if (!progress.isCanceled())
             	progress.done();
