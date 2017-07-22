@@ -15,7 +15,7 @@ node {
 		stage 'Maven Build'
 		def mvnHome = tool 'M3'
 		try {
-			wrap([$class:'Xvnc', useXauthority: true]) {
+			wrap([$class:'Xvfb', useXauthority: true]) {
 				sh "${mvnHome}/bin/mvn --batch-mode -fae -Dmaven.test.failure.ignore=true -Dmaven.repo.local=.m2/repository clean install"
 			}
 		} finally {
